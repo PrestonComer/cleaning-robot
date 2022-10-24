@@ -7,11 +7,11 @@ DIRECTIONS = {
     "Left" : (0, -1)
 }
 
-POSSIBLEFINDS = ["Empty", "Robot", "Dirt", "Blocked"]
+POSSIBLEFINDS = ["Empty", "Robot", "Dirt", "Object"]
 
 class environment:
     def __init__(self, numRows, numCols, robotLocation, cleanLocations=[], 
-                blockedLocations=[]):
+                objectLocations=[]):
         self.numRows = numRows
         self.numCols = numCols
         self.robotLocation = robotLocation
@@ -27,17 +27,17 @@ class environment:
         # Remove the spots designated as not dirty
         for locRow, locCol in cleanLocations:
             self.env[locRow][locCol] = "Clean"
-        for locRow, locCol in blockedLocations:
-            self.env[locRow][locCol] = "Blocked"
+        for locRow, locCol in objectLocations:
+            self.env[locRow][locCol] = "Object"
 
-        # If the robot is blocked randomly move it.
+        # If the robot finds an Object randomly move it.
         # If you fail to move the robot 10 times then give an error asking the
         # user to please try and enter a better starting location
-        if self.env[self.robotLocation[0]][self.robotLocation[1]] == "Blocked":
+        if self.env[self.robotLocation[0]][self.robotLocation[1]] == "Object":
             randRow = random.randint(0, numRows - 1)
             randCol = random.randint(0, numCols - 1)
             unluckyRobot = 0
-            while self.env[randRow][randCol] == "Blocked" and unluckyRobot < 10:
+            while self.env[randRow][randCol] == "Object" and unluckyRobot < 10:
                 unluckyRobot += 1
                 randRow = random.randint(0, numRows - 1)
                 randCol = random.randint(0, numCols - 1)
