@@ -7,11 +7,11 @@ DIRECTIONS = {
     "Left" : (0, -1)
 }
 
-POSSIBLEFINDS = ["Nothing", "Robot", "Dirt", "Object"]
+POSSIBLEFINDS = ["Empty", "Robot", "Dirt", "Blocked"]
 
 class environment:
     def __init__(self, numRows, numCols, robotLocation, cleanLocations=[], 
-                objectLocations=[]):
+                blockedLocations=[]):
         self.numRows = numRows
         self.numCols = numCols
         self.robotLocation = robotLocation
@@ -27,17 +27,17 @@ class environment:
         # Remove the spots designated as not dirty
         for locRow, locCol in cleanLocations:
             self.env[locRow][locCol] = "Clean"
-        for locRow, locCol in objectLocations:
-            self.env[locRow][locCol] = "Object"
+        for locRow, locCol in blockedLocations:
+            self.env[locRow][locCol] = "Blocked"
 
-        # If the robot is in the same spot as an object randomly move it.
+        # If the robot is blocked randomly move it.
         # If you fail to move the robot 10 times then give an error asking the
         # user to please try and enter a better starting location
-        if self.env[self.robotLocation[0]][self.robotLocation[1]] == "Object":
+        if self.env[self.robotLocation[0]][self.robotLocation[1]] == "Blocked":
             randRow = random.randint(0, numRows - 1)
             randCol = random.randint(0, numCols - 1)
             unluckyRobot = 0
-            while self.env[randRow][randCol] == "Object" and unluckyRobot < 10:
+            while self.env[randRow][randCol] == "Blocked" and unluckyRobot < 10:
                 unluckyRobot += 1
                 randRow = random.randint(0, numRows - 1)
                 randCol = random.randint(0, numCols - 1)
@@ -47,7 +47,7 @@ class environment:
 
     def setLocation(self, location, find):
         self.env[location[0]][location[1]] = find
-    
+
     # Given a location check to see if that location is in bounds of the env
     # True means that it is, False means that it is not
     def inBounds(self, location):
