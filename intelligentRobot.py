@@ -2,9 +2,9 @@ from environment import *
 from random import choice, randint
 from json import dumps
 
-POSSIBLEMETHODS = ["dirtFirst", "cyclicMovement", ]
+POSSIBLEMETHODS = ["dirtFirst", "cyclicMovement", "random"]
 
-class tournamentRobot:
+class robot:
     def __init__(self, environment):
         self.env = environment
         self.totalMoves = 0
@@ -59,7 +59,12 @@ class tournamentRobot:
                     self.moveCounters[moveChoice] += 1
                     break
 
+    # Method of cleaning such that the robot will clean first up then right then
+    # down then left
     def cyclicMovement(self):
+        pass
+
+    def random(self):
         pass
 
     def cleanEnvironment(self):
